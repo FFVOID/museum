@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+	
+<head>	
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<th:block layout:fragment="css">
+	<style>
+
+div {
+    display: block;
+}
+
+.wrap_inner {
+	width: auto;
+	position: relative;
+	margin: 0 auto;
+}
+
+main{
+	display: block;
+}
+
+.main_view{
+ width: 1000px;
+ margin: 20px auto 0;
+}
+
+article {
+	display: block;
+}
+
+.view_content_wrap{
+	font-size: 13px;
+}
+
+header{
+	display: block;
+}
+
+.head{
+	margin: 16px 0 29px;
+    padding-bottom: 11px;
+    border-bottom: 1px solid #59ab6e;
+}
+
+.contents{
+	line-height: 22px;
+}
+
+.sub::before{
+    content: "";
+    display: inline-block;
+    width: 1px;
+    height: 14px;
+    background: #cfcfcf;
+    margin: 0 10px 0 6px;
+    vertical-align: -2px;
+}	
+
+
+.newbtns {
+	width: 80px;
+	padding: 10px;
+	box-sizing: border-box;
+	border-radius: 5px;
+	border: none;
+	margin-bottom: 25px;
+	border: 1px solid;
+	border-color: #297c64;
+	margin-top: 10px;
+	height: 37px;
+	font-size: 13px;
+	margin-right: 5px;
+}
+
+#newbtn1 {
+	background-color: #349e7f;
+	margin-bottom: 30px;
+	color: white;
+	cursor: pointer;
+	transition: background-color 0.5s;
+	border: none;
+}
+
+#newbtn2 {
+	background-color: #59ab6e;
+	margin-bottom: 30px;
+	color: white;
+	cursor: pointer;
+	transition: background-color 0.5s;
+	border: none;
+}
+
+#commentBtn{
+	background-color: #59ab6e;
+	margin-bottom: 30px;
+	color: white;
+	cursor: pointer;
+	border: none;
+}
+
+#newbtn1:hover {
+	background-color: #46d1a9;
+}
+
+#newbtn2:hover {
+	background-color: #46d1a9;
+}
+
+.newbtnMain {
+	margin-top:10px;
+	text-align: center;
+	position: relative;
+    left: 465px;
+}
+
+.cmtBox{
+	padding: 12px 12px 12px;
+    background: #fafafa;
+    border-top: 2px solid #59ab6e;
+    height: 220px;
+    border-bottom: 2px solid #59ab6e;
+}
+
+.textBox{
+	width: 970px;
+	height: 130px;
+}
+
+textarea{
+	width: 970px;
+    padding: 13px;
+    border: solid 1px #cddbe0; 
+    background: #fff;
+    font-size: 15px;
+    color: #333;
+    line-height: 18px;
+    resize: none;
+    height: 130px;
+}
+
+.cmtBox2{
+	border-top: 2px solid #59ab6e;
+}
+
+.cmtContentBox{
+	height: 33px;
+	border-bottom: 1px solid #eeeeee;
+}
+
+.cimtList{
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+.cmtContent{
+	float: left;
+	padding:10px;
+    font-size: 14px !important;
+    line-height: 13px;
+    width: 700px;
+}
+
+.cmtWriter{
+	float: left;
+    line-height: 13px;
+    width: 140px !important;
+    padding:10px;
+    font-size: 15px !important;
+}
+
+.cmtRegTime{
+	width: 130px !important;
+	float: left;
+    line-height: 13px;
+    padding:10px;
+    font-size: 14px !important;
+}
+
+.pagination{
+	justify-content: center;
+	margin-top: 10px;
+}
+
+.cmtDeleteBtn{
+	background: url('/img/close.png');
+    width: 15px;
+    height: 15px;
+    background-size: 15px 15px;
+    border: none;
+    margin-top: 8px;
+}
+
+.boardTitle {
+        overflow-wrap: break-word;
+        width: 100%;           
+ }
+	</style>
+</th:block>
+
+<div layout:fragment="content">
+	<div class="wrap_inner">
+		<input type="hidden" id="boardDtoId" name="boardDtoId" th:value="${boardDto.id}">
+		<main id="container" class="clear main_view">
+			<section>
+				<article>
+					<div class="view_content_wrap">
+						<header>
+							<div class="head">
+								<div style="margin-bottom: 10px;" th:text="${boardDto.title}" class="boardTitle"></div>
+								<div>
+								    <span style="font-size: 15px !important;" th:text="'작성자   ' + ${boardDto.writer}"></span>
+									<span class="sub" style="font-size: 15px !important;" th:text="'등록일   ' + ${#temporals.format(boardDto.regTime, 'yyyy.MM.dd HH:mm:ss')}"></span>
+									<span style="font-size: 15px !important;float: right;" th:text="'조회 ' + ${boardDto.count}"></span>
+								</div>
+							</div>
+						</header>
+							<div class="contents">
+								<div>
+									<th:block th:if="${not #lists.isEmpty(boardDto.boardImgList)}" 
+										th:each="boardImg, status : ${boardDto.boardImgList}">
+										<div th:if="${not #lists.isEmpty(boardImg.imgUrl)}">
+											<div style="max-width: 1000px; overflow: auto;margin-bottom: 10px;">
+												<img th:src="${boardImg.imgUrl}" th:alt="${boardImg.oriImgName}">
+											</div>
+										</div>
+									</th:block>
+								</div>
+							</div>
+							<div style="padding: 20px 0;margin-bottom: 60px;" th:text="${boardDto.content}"></div>
+						</div>
+						<div class="cmtBox2">
+							<ul class="cimtList">
+								<li th:each="cmt : ${boardCmtDtoPage}">
+									<div class="cmtContentBox">
+										<div class="cmtWriter" th:text="${cmt.cmtWriter}"></div>
+										<div class="cmtContent" th:text="${cmt.cmtContent}"></div>
+										<div class="cmtRegTime" th:text="${#temporals.format(cmt.regTime, 'MM.dd HH:mm:ss')}"></div>
+										<button type="button" class="cmtDeleteBtn" th:onclick="'deleteCmt(\'' + ${cmt.id} + '\')'"></button>
+										<input type="hidden" name="cmtIds" id="cmtIds" th:value="${cmt.id}">
+									</div>
+								</li>
+							</ul>
+							   <div class="cmtPage" th:if="${boardCmtDtoPage.totalElements > 0}">
+								    <ul class="pagination pagination-sm">
+								        <li class="page-item" th:classappend="${boardCmtDtoPage.hasPrevious()} ? '' : 'disabled'">
+								            <a class="page-link" th:href="@{'/boards/view/' + ${boardDto.id} + '?page=' + ${boardCmtDtoPage.number - 1}}" th:text="이전"></a>
+								        </li>
+								        <li th:each="pageNumber : ${#numbers.sequence(1, boardCmtDtoPage.totalPages)}" class="page-item active">
+								            <a class="page-link" th:href="@{'/boards/view/' + ${boardDto.id} + '?page=' + ${pageNumber}}" th:text="${pageNumber}"></a>
+								        </li>
+								        <li class="page-item" th:classappend="${boardCmtDtoPage.hasNext()} ? '' : 'disabled'">
+								            <a class="page-link" th:href="@{'/boards/view/' + ${boardDto.id} + '?page=' + ${boardCmtDtoPage.number + 1}}" th:text="다음"></a>
+								        </li>
+								    </ul>
+								</div>
+						</div>
+						<div class="cmtBox">
+						<input type="hidden" id="commentId" name="commentId"/>
+						<input type="hidden" id="cmtWriter" name="cmtWriter" th:value="${boardDto.cmtWriter}"/>
+							<div class="textBox">
+								<textarea id="cmtContent" name="cmtContent" placeholder="댓글 작성칸입니다"></textarea>
+							</div>
+							<div class="cmtBtn">
+								<button type="button" id="commentBtn" class="newbtns" style="margin-bottom: 0px;position: relative;left: 890px;"
+								onclick="saveComment();">등록</button>
+							</div>
+						</div>
+				</article>
+			</section>
+				<div class="newbtnMain">
+					<button type="button" id="newbtn2"
+						class="newbtns" th:onclick="|location.href='@{/boards/modify/{boardId}(boardId=${boardId})}'|">수정</button>
+					<button type="button" id="newbtn1" class="newbtns" th:value="${boardDto.id}" th:onclick="deleteBoard(this.value)">삭제</button>
+					<button type="button" id="newbtn1" class="newbtns" 
+					onclick="location.href='/boards/list'" style="position: relative;right: 1010px;">글목록</button>
+				</div>
+		</main>
+	</div>
+</div>
+
+
+<th:block layout:fragment="script">
+	<script th:src="@{/js/jquery-1.11.0.min.js}"></script>
+	<script th:inline="javascript">
+	
+	$(document).ready(function() {
+        adjustCmtBox2Height(); 
+    });
+
+    function adjustCmtBox2Height() {
+        var totalHeight = 0;
+
+        $(".cmtContentBox").each(function() {
+        	totalHeight += $(this).outerHeight();
+        });
+
+        $(".cimtList").height(totalHeight);
+    }
+    
+    //댓글등록
+	function saveComment(){
+		var cmtContent = $("#cmtContent").val();
+		
+		if(cmtContent == null || cmtContent == ""){
+			alert("댓글 내용을 작성해주세요.")
+			return;
+		}
+		
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		
+		
+		 if (!token || !header) {
+		        alert("CSRF 정보가 올바르게 가져와지지 않았습니다.");
+		        return;
+		    }
+		 
+		 
+		var boardId = $("#boardDtoId").val();
+		var cmtContent = $("#cmtContent").val();
+		var cmtId = $("#commentId").val();
+		var cmtWriter = $("#cmtWriter").val();
+		
+		var url = "/saveComment"
+		
+		if(confirm("댓글을 등록하시겠습니까?")){
+			
+			var paramData = {
+					boardId : boardId,
+					cmtContent : cmtContent,
+					cmtId : cmtId,
+					cmtWriter : cmtWriter
+			}
+			
+			var param = JSON.stringify(paramData);
+			
+			$.ajax({
+				url : url, //request URL
+				type : "POST", //전송방식
+				contentType : "application/json",
+				data : param, //서버에 전송할 데이터
+				beforeSend : function(xhr) {
+					//데이터를 전송하기전에 헤더에 csrf 값을 설정
+					xhr.setRequestHeader(header, token);
+				},
+				dataType : "text",
+				cache : false,
+				success: function(status) {
+					var redirectUrl = "/boards/view/" + boardId;
+					console.log("성공")
+					window.location.href = redirectUrl;
+				},
+				error : function(jqXHR, status, error) {
+					if (jqXHR.status == '401') {
+						alert('로그인 후 다시 작성해주세요');
+					} else {
+					}
+				}
+			})
+		}
+		
+	}
+	
+	//댓글삭제
+    function deleteCmt(cmtId) {
+    	var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+    	
+        if (confirm("댓글을 삭제하시겠습니까?")) {
+            $.ajax({
+                url: '/boards/deleteCmt/' + cmtId,
+                type: 'delete',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                cache: false,
+                success: function(result) {
+                	alert(result);
+                    location.reload();
+                },
+                error: function() {
+                    alert('댓글 삭제 실패');
+                }
+            });
+        }
+    }
+	
+	
+  	//글삭제
+    function deleteBoard(boardId) {
+    	var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+    	
+        if (confirm("글을 삭제하시겠습니까?")) {
+            $.ajax({
+                url: '/boards/deleteBoard/' + boardId,
+                type: 'delete',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                cache: false,
+                success: function(result) {
+                	alert(result)
+                	window.location.href = '/boards/list';
+                	
+                },
+                error: function() {
+                    alert('글 삭제 실패');
+                }
+            });
+        }
+    }
+	
+	</script>
+</th:block>
+
+</html>

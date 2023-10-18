@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<th:block layout:fragment="css">
+	<style>
+	
+	.imgs>img {
+	height: 500px;
+	}
+	
+	.mx-auto > img {
+		weight: 500px;
+		height: 500px;
+		
+	}
+	
+	
+</style>
+</th:block>
+
+<div layout:fragment="content">
+	    <!-- Start Banner Hero -->
+    <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid" src="img/회연도.jpg" alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left align-self-center">
+                                <h1 class="h1 text-success"><b></b>환영합니다</h1>
+                                <p>보물 - 연정계회도(1986)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid" src="img/금관.jpg" alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left">
+                                <h1 class="h1">환영합니다</h1>
+                                <h3 class="h2"></h3>
+                                <p>	보물 - 금령총 금관(1963)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid" src="img/금동약사불입상.jpg" alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left">
+                                <h1 class="h1">환영합니다</h1>
+                                <h3 class="h2"></h3>
+                                <p>보물 - 금동약사여래입상(1963)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="prev">
+            <i class="fas fa-chevron-left"></i>
+        </a>
+        <a class="carousel-control-next text-decoration-none w-auto pe-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="next">
+            <i class="fas fa-chevron-right"></i>
+        </a>
+        </div>
+        
+    <!-- End Banner Hero -->
+        <!-- Start Featured Product -->
+    <section class="bg-light">
+        <div class="container py-5">
+            <div class="row text-center py-3">
+                <div class="col-lg-6 m-auto">
+                    <h1 class="h1">진행중인전시</h1>
+                    <p>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+            	<th:block th:each="item : ${items}">
+                <div class="col-12 col-md-4 mb-4">
+                    <div class="card h-100">
+                        <a class="imgs" th:href="'/exhibition/' + ${item.id}">
+                            <img th:src="${item.imgUrl}" th:alt="${item.itemNm}" class="card-img-top" alt="...">
+                        </a>
+                        <div class="card-body">
+                        	<h3 th:text="|전시이름 : ${item.itemNm}|"></h3>
+                        	<h4 th:text="${#strings.replace(item.oriImgName, '.jpg' ,'')}"></h4>
+                            <p th:text="|전시기간 : ${item.itemDate}|">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Featured Product -->
+</div>
+</html>

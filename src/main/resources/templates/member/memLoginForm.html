@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	layout:decorate="~{layouts/layout1}">
+
+<th:block layout:fragment="css">
+	<style>
+	.form-group {
+		text-align: center;
+	}
+	
+	.loginform {
+		width: 500px;
+		margin-top: 50px;
+		margin-bottom: 50px;
+	}
+	
+	.id_check{
+		margin-bottom:10px;
+	}
+	
+	h2{
+		margin-bottom: 30px;
+	}
+	
+	.error{
+	color: #bd2130;
+	}
+	
+	.imgs>img {
+height: 520px;
+}
+
+.mx-auto > img {
+	weight: 500px;
+	height: 500px;
+	
+}
+	
+.kakaoLogin {
+	border: none;
+	background-color: white;
+	cursor: pointer;
+}
+
+.Btn{
+	text-align: center;
+}
+
+.joinBtn{
+	margin-top: 15px;
+	text-align: center;
+}
+
+#loginbtn{
+	width: 150px;
+}
+
+.snsBtn{
+	text-align: center;
+}
+	</style>
+</th:block>
+
+<div layout:fragment="content">
+   	    <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid" src="/img/회연도.jpg" alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left align-self-center">
+                                <h1 class="h1 text-success"><b></b>환영합니다</h1>
+                                <p>보물 - 연정계회도(1986)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid" src="/img/금관.jpg" alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left">
+                                <h1 class="h1">환영합니다</h1>
+                                <h3 class="h2"></h3>
+                                <p>	보물 - 금령총 금관(1963)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid" src="/img/금동약사불입상.jpg" alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left">
+                                <h1 class="h1">환영합니다</h1>
+                                <h3 class="h2"></h3>
+                                <p>보물 - 금동약사여래입상(1963)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="prev">
+            <i class="fas fa-chevron-left"></i>
+        </a>
+        <a class="carousel-control-next text-decoration-none w-auto pe-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="next">
+            <i class="fas fa-chevron-right"></i>
+        </a>
+        </div>
+    <!-- End Banner Hero -->
+    
+	<div class="container loginform">
+		<div class="row">
+			<h2>로그인</h2>
+			<form role="form" action="/members/login" method="post">
+				<div>
+					<div class="mb-3">
+						<label th:for="userId" class="form-label">아이디</label>
+						<input type="text" class="form-control"  id="userId" name="userId">
+					</div>
+					<div class="mb-3">
+						<label th:for="password" class="form-label" >비밀번호</label>
+						<input type="password" class="form-control" id="password" name="password">
+					</div>
+				</div>
+				
+
+				<div>
+					<p th:if="${loginErrorMsg}" class="error" th:text="${loginErrorMsg}"></p>
+					<label class="id_check">
+						<input type="checkbox" name="id_save" id="id_save" />&nbsp;아이디 기억
+					</label>
+					<div class=Btn>
+						<button type="submit" class="btn btn-primary mb-3" id="loginbtn">로그인</button>
+						&nbsp;
+						<button type="button" class="btn btn-primary mb-3" id="loginbtn" onclick="location.href='/members/new'">회원가입</button>
+					</div>
+				</div>
+				<div class="snsBtn">
+						<p style="font-size: 14px !important; margin-bottom: 5px;">간편회원가입</p>
+						<a href="/oauth2/authorization/kakao">
+							<button type="button" id="kakaoLogin" class="kakaoLogin">
+								<img src="/img/kakao_login_medium_narrow.png" alt="">
+							</button>
+						</a>
+					</div>
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+			</form>
+		</div>
+	</div>
+</div>
+
+<th:block layout:fragment="script">
+<script type="text/javascript" th:src="@{/js/cookie.js}"></script>
+	<script th:inline="javascript">
+	//쿠키를 이용한 아이디 기억
+	$(document).ready(function() {
+		var userInputId = getCookie("userInputId"); //쿠키값을가져온다
+		var setCookieYN = getCookie("setCookieYN"); //쿠기값(이메일)을 가져온다
+
+		if (setCookieYN == 'Y') { //이메일 저장여부가 y면
+			$("#id_save").prop("checked", true);  //이메일 저장 체크박스를 체크한다
+			$("#userId").val(userInputId);  //이메일 input창에는 쿠키에서 가져온 이메일 주소를 넣는다
+		} else {
+			$("#id_save").prop("checked", false);
+		}
+
+		//로그인 버튼 클릭시 쿠키에 이메일, 이메일 저장여부 저장
+		$('#loginbtn').click(function() { 
+			if ($("#id_save").is(":checked")) { //이메일 저장에 체크가 되어있다면
+				var userInputId = $("#userId").val(); //이메일 값을 가지고온다
+				//쿠키생성
+				setCookie("userInputId", userInputId, 60); //이메일 저장
+				setCookie("setCookieYN", "Y", 60); //이메일 저장여부 저장
+			} else {
+				//쿠기삭제
+				deleteCookie("userInputId"); 
+				deleteCookie("setCookieYN");
+			}
+		});
+	});
+	</script>
+</th:block>
+
+</html>
