@@ -34,11 +34,9 @@ public class ItemService {
 	
 	public Long saveItem(NewItemDto newItemDto, List<MultipartFile> itemImgFileList,Item items) throws Exception {
 		
-		//전시 등록
-	
-		Item item = newItemDto.createItem(); //dto -> entity
+		Item item = newItemDto.createItem(); 
 		item.setStock(100);
-		itemRepository.save(item); //저장
+		itemRepository.save(item); 
 		
 		//이미지 등록
 		for(int i=0; i<itemImgFileList.size(); i++) {
@@ -88,9 +86,6 @@ public class ItemService {
 		Item item = itemRepository.findById(newItemDto.getId())
 								 	.orElseThrow(EntityNotFoundException::new);
 		
-		
-		//★update쿼리문 실행 => 한번 insert를 진행하면 엔티티가 영속성 컨텍스트에 저장이 되므로 
-		//그 이후에는 변경감지 기능이 동작하기 때문에 개발자는 update쿼리문을 쓰지 않고 엔티티만 변경해주면 된다
 		item.updateItem(newItemDto);
 		
 		List<Long> itemImgIds = newItemDto.getItemImgIds();

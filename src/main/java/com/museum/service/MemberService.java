@@ -17,8 +17,8 @@ import com.museum.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@Transactional //쿼리문 수행시 에러가 발생하면 변경된 데이터를 이전상태로 콜백시켜줌
-@RequiredArgsConstructor // @autowired를 사용하지 않고 의존성 주입을 시켜준다
+@Transactional
+@RequiredArgsConstructor 
 public class MemberService implements UserDetailsService {
 	
 	private final MemberRepository memberRepository;
@@ -26,7 +26,7 @@ public class MemberService implements UserDetailsService {
 	
 	//회원가입 데이터를 DB에 저장한다
 	public Member saveMember(Member member) {
-		validateDuplicateMember(member); //중복체크
+		validateDuplicateMember(member);
 		Member savedMember = memberRepository.save(member);
 		return savedMember;
 	}
@@ -42,9 +42,8 @@ public class MemberService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-		//사용자가 입력한 email이 DB에 있는지 쿼리문을 사용해서 알아본다
 		Member member = memberRepository.findByUserId(userId);
-		if(member == null) { //사용자가 없으면
+		if(member == null) { 
 			throw new UsernameNotFoundException(userId);
 		}
 		

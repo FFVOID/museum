@@ -26,5 +26,5 @@ public class MemberFormDto {
 	
 	private String emailConfirm; //이메일로 받은 인증번호
 	
-	private String emailConfirm2; ////이메일로 받은 인증번호 확인용
+	private String emailConfirm2; //인증번호 확인용
 }

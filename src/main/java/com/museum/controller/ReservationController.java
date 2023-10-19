@@ -42,7 +42,6 @@ public class ReservationController {
 	@GetMapping(value = "/reservation/item")
 	public String reservationItem(Model model) {
 		
-		//전시 목록 가져와서 보여주기
 		List<NewItemDto> newItemDto = reservationService.getItemList();
 		
 	    model.addAttribute("newItemDto", newItemDto);
@@ -60,7 +59,7 @@ public class ReservationController {
 			List<FieldError> fieldErrors = bindingResult.getFieldErrors();
 			
 			for(FieldError fieldError : fieldErrors) {
-				sb.append(fieldError.getDefaultMessage()); // 에러메세지를 합침
+				sb.append(fieldError.getDefaultMessage());
 			}
 			
 			return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST);

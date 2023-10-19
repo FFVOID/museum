@@ -37,14 +37,11 @@ public class ReservationService {
 	//예약
 	public Long reserved(ReservedDto reservedDto , String userId) {
 		
-		//전시 조회
 		Item item = itemRepository.findById(reservedDto.getItemId())
 								.orElseThrow(EntityNotFoundException::new);
 		
-		//현재 로그인한 회원의 아이디와 회원 정보를 조회
 		Member member = memberRepository.findByUserId(userId);
 		
-		//예약할 전시 엔티티(item)를 이용해 예약전시(reservation)엔티티를 작성 
 		List<Reservation> reservationItemList = new ArrayList<>();
 		
 		if (item.getStock() <= 0) {
@@ -140,9 +137,6 @@ public class ReservationService {
 		
 		Reservation reservation = reservedRepository.findReservation(reservedId);
 		
-		//생성자를 이용 ReservationDto reservationDto = new ResrvationDto(reservation);
-		//modelmapper를 이용해서 앞단에 정보 보여줌
-		//ReservationDto reservationDto = ReservationDto.of(reservation);
 		ReservedDto reservedDto = ReservedDto.of(reservation);
 		
 		return reservedDto;
@@ -153,14 +147,10 @@ public class ReservationService {
 	public Long updateReserved(ReservedHistDto reservedHistDto ,ReservedDto reservedDto) throws Exception {
 		
 		Reservation reservation = reservedRepository.findReservation(reservedHistDto.getReservedId());
-		//Reserved reserved = reservedRepository.findReservedIds(reservedId);
 		
 		int preCount = reservation.getCount();
-		System.out.println(preCount);
 	    int currentCount = reservedDto.getCount();
-	    System.out.println(currentCount);
 	    int reCount = currentCount - preCount;
-	    System.out.println(reCount);
 		
 	    Item item = reservation.getItem();
 	    int newStock = item.getStock() - reCount;
@@ -173,7 +163,6 @@ public class ReservationService {
 	    itemRepository.save(item);
 	    
 		reservation.updateReservation(reservedDto);
-		//reserved.updateReserved(reservedHistDto);
 		
 		return reservation.getId();
 		

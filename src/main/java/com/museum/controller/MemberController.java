@@ -110,7 +110,6 @@ public class MemberController {
 		socialMemberDto.setProviderId(providerId);
 		socialMemberDto.setName(name);
 		
-		//쿠키정보를 저장했으면 쿠키를 삭제한다 삭제안하면 웹사이트개발자도구에 남아있음
 		Cookie emailCookie = new Cookie("email", null);
 		emailCookie.setMaxAge(0); 
 		emailCookie.setPath("/"); 
@@ -138,7 +137,6 @@ public class MemberController {
 	@PostMapping(value = "/members/newSocial")
 	public String socialMemberForm(@Valid SocialMemberDto socialMemberDto, BindingResult bindingResult, Model model) {
 		
-		//에러처리
 		if(bindingResult.hasErrors()) {
 			return "member/socialMemberForm";
 		}
@@ -178,12 +176,10 @@ public class MemberController {
 	    
 	    Member member = memberRepository.findByUserId(userId);
 
-	    // 사용자가 입력한 현재 비밀번호와 데이터베이스에서 가져온 암호화된 비밀번호를 비교합니다.
 	    if (passwordEncoder.matches(delMemberDto.getPassword(), member.getPassword())) {
-	        // 비밀번호가 일치하는 경우, 탈퇴 작업을 수행합니다.
 	    	memberService.deleteMember(member.getId());
 	    	
-	        SecurityContextHolder.clearContext(); // 로그아웃
+	        SecurityContextHolder.clearContext(); 
 	        return "redirect:/members/logout"; 
 	    } else {
 			

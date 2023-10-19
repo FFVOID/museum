@@ -31,9 +31,9 @@ public class FileService {
 	public void deleteFile(String filePath) throws Exception {
 		File deleteFile = new File(filePath);
 		
-		if(deleteFile.exists()) { //해당경로에 파일이 있으면
+		if(deleteFile.exists()) { 
 			deleteFile.delete();
-			log.info("파일을 삭제하였습니다"); //로그 기록을 저장
+			log.info("파일을 삭제하였습니다"); 
 		} else {
 			log.info("파일이 존재하지 않습니다");
 		}

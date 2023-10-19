@@ -14,7 +14,6 @@ public class ReservationDto {
 	
 	public ReservationDto() {};
 	
-	// view에 보여주기위해 엔티티를 dto로 변환
 	public ReservationDto(Reservation reservation) {
 		this.itemNm = reservation.getItem().getItemNm();
 		this.itemDate = reservation.getItem().getItemDate();

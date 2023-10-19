@@ -15,12 +15,12 @@ import lombok.RequiredArgsConstructor;
 public class MailService {
 	
 	private final JavaMailSender javaMailSender; //메일을 발송 java메일 api를 이용
-    private static final String senderEmail= "iptime102030@gmail.com"; //발신자메일
-    private static final String senderName = "이메일인증테스트(박물관)"; //이메일인증테스트 <iptime102030@gmail.com>
+    private static final String senderEmail= "iptime102030@gmail.com"; 
+    private static final String senderName = "이메일인증테스트(박물관)"; 
     private static int number;
 
     public static void createNumber(){
-        number = (int)(Math.random() * (90000)) + 100000;// (int) Math.random() * (최댓값-최소값+1) + 최소값
+        number = (int)(Math.random() * (90000)) + 100000;
     }
 
     public MimeMessage CreateMail(String email){
@@ -33,8 +33,6 @@ public class MailService {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
-            
-            System.out.println("Sending email to: " + email);
             
             message.setRecipients(MimeMessage.RecipientType.TO, email);
             message.setSubject("이메일 인증");

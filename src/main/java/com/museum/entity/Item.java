@@ -40,7 +40,6 @@ public class Item extends BaseEntity{
 	@OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
 	private List<ItemImg> itemImgs = new ArrayList<>();
 	
-	//수정된 전시 정보를 업데이트
 	public void updateItem(NewItemDto newItemDto) {
 		this.itemNm = newItemDto.getItemNm();
 		this.itemDetail = newItemDto.getItemDetail();
@@ -48,10 +47,9 @@ public class Item extends BaseEntity{
 	
 	}
 	
-	 // 예약 메서드
     public int newStock(int count) {
         if (stock >= count) {
-            stock -= count; // 남은 인원 수를 감소
+            stock -= count; 
         } else {
            
         }

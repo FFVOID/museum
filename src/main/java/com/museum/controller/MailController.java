@@ -22,7 +22,7 @@ public class MailController {
 	
 	private final MemberService memberService;
 	
-	@PostMapping("/email") // /mail로 들어오면 post방식으로 메일을 전송
+	@PostMapping("/email")
     public @ResponseBody ResponseEntity MailSend(@RequestBody EmailDto emailDto  ,Model model){
     	boolean memberCheck = memberService.findMember(emailDto.getEmail());
     			
@@ -31,7 +31,6 @@ public class MailController {
     	}		
         int number = mailService.sendMail(emailDto.getEmail());
         
-        //인증번호
         String num = "" + number;
         System.out.println("인증번호==" + num);
         

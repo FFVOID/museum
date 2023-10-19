@@ -36,7 +36,6 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 		if("kakao".equals(provider)) { 
     	    oAuth2UserInfo = new KakaoUserInfo(oAuth2User.getAttributes()); 
     	} else {
-    	    // 적절한 예외 처리 또는 로깅
     	    throw new RuntimeException("지원하지 않는 OAuth 제공자입니다.");
     	}
 		  
@@ -58,7 +57,6 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                  .provider(provider).providerId(providerId)
                  .build();
      }else {
-    	    // 기존 사용자의 경우, DB에서 가져온 Role을 사용
     	    role = byUsername.getRole();
     	}
      

@@ -1,5 +1,6 @@
 package com.museum.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
@@ -16,7 +17,8 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 public class BoardImgService {
 	
-	private String boardImgLocation = "C:/museum/board";
+	@Value("${boardImgLocation}")
+	private String boardImgLocation;
 	
 	private final BoardImgRepository boardImgRepository;
 	private final FileService fileService;

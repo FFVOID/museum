@@ -15,7 +15,7 @@ public class AuditorAwareImpl implements AuditorAware<String>{
 		String userId = "";
 		
 		if(authentication != null) {
-			userId = authentication.getName(); //로그인한 사용자의 id를 가지고온다
+			userId = authentication.getName(); 
 		}
 		
 		return Optional.of(userId);

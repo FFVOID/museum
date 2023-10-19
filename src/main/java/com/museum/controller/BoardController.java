@@ -52,6 +52,7 @@ public class BoardController {
 		return "board/new";
 	}
 	
+	//글 등록기능
 	@PostMapping(value = "/boards/new")
 	public String newBoard(@Valid BoardDto boardDto, BindingResult bindingResult, Model model,
 			@RequestParam("boardImgFile") List<MultipartFile> boardImgFileList, Board boards
@@ -59,7 +60,6 @@ public class BoardController {
 		
 		//유효성검사에러체크
 		if(bindingResult.hasErrors()) {
-			System.out.println("유효성검사체크");
 			return "board/new";
 		}
 		
@@ -84,7 +84,7 @@ public class BoardController {
 		model.addAttribute("boardSearchDto", boardSearchDto);
 		model.addAttribute("maxPage", 5);
 		
-		return "/board/list";
+		return "board/list";
 	}
 	
 	//게시글 상세 페이지
@@ -131,7 +131,7 @@ public class BoardController {
 			@RequestParam("boardImgFile") List<MultipartFile> boardImgFileList) {
 		
 		if(bindingResult.hasErrors()) {
-			return "/board/modify";
+			return "board/modify";
 		}
 		
 			try {

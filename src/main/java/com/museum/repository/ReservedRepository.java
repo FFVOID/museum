@@ -12,11 +12,9 @@ import com.museum.entity.Reserved;
 
 public interface ReservedRepository extends JpaRepository<Reserved, Long>{
 	
-	//현재 로그인한 사용자의 주문 데이터를 페이징 조건에 맞춰서 조회
 	@Query("select o from Reserved o where o.member.userId = :userId order by o.reservedDate desc")
 	List<Reserved> findReserveds(@Param("userId") String userId, Pageable pageable);
 	
-	//현재 로그인한 회원의 주문 개수가 몇개인지 조회(total)
 	@Query("select count(o) from Reserved o where o.member.userId = :userId")
 	Long countReserveds(@Param("userId") String userId);
 	
@@ -29,14 +27,4 @@ public interface ReservedRepository extends JpaRepository<Reserved, Long>{
 	@Query("select o from Reserved o where o.Id = :Id")
 	Reserved findReservedItems(@Param("Id") Long reservedId);
 	
-	
-	
-	
-	
-	/*
-	 * @Query("select reservation.* " + "from reservation, reserved " +
-	 * "where reservation.reservation_id = :reserved_id", nativeQuery = true)
-	 * Reservation findReservationItem(@Param("reserved_id") Long reservedId);
-	 */
-	 
 }
