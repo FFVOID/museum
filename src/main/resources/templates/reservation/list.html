@@ -30,7 +30,7 @@
 		}
 		
 		.searchmain{
-			width: 800px;
+			width: 650px;
 		}
 		
 		.mainbtn{
@@ -69,23 +69,16 @@
 										<th scope="col">번호</th>
 										<th scope="col">전시명</th>
 										<th scope="col">예약완료시간</th>
-										<th scope="col">예약상태</th>
 									</tr>
 								</thead>
 								<tbody>
 									<!-- 조회된 데이터를 출력한다  -->
 									<tr th:each="reserved, status: ${reserved.getContent()}">
 										<th th:text="${reserved.reservedId}"scope="row"></th>
-										<td th:each="item : ${reserved.reservationDtoList}">
+										<td th:each="item : ${reserved.reservationDtoList}" style="width: 350px;">
 											<a th:href="@{'/reservation/dtl/' + ${reserved.reservedId}}" class="rsName" th:text="${item.itemNm}"></a>
 										</td>
 										<td th:text="${reserved.reservedDate}"></td>
-										<th:block th:if="${#strings.equals(reserved.reservedStatus, 'RESERVATION')}">
-											<td th:text='예약완료'></td>
-										</th:block>
-										<th:block th:unless="${#strings.equals(reserved.reservedStatus, 'RESERVATION')}">
-											<td style="font-size: 18px;">예약취소</td>
-										</th:block>
 									</tr>
 								</tbody>
 							</table>

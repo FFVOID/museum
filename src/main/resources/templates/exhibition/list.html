@@ -57,6 +57,7 @@
 				<div class="row">
 				<div class="mainbtn">
 					<a href="/exhibition/list">전시 리스트</a>
+					<p th:if="${noItemMessage}" class="fieldError" th:text="${noItemMessage}"></p>
 				</div>
 					<form th:action="@{'/exhibition/dtl' + ${itemList.number}}" method="get" th:object="${itemList}">
 						<div class="row">

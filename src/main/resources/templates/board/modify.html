@@ -212,7 +212,7 @@ h5{
     					text-align: start; margin-left: 310px; margin-bottom: 0px; font-size: 15px !important;" ></p>
 				<div class="titleMain">
 					<label th:for="titles" class="titles">제목</label> 
-					<input type="text" placeholder="제목을 입력해주세요" th:field="*{title}" class="in">
+					<input type="text" placeholder="제목을 입력해주세요" th:field="*{title}" class="in" maxlength="50">
 				</div>
 
 				<div class="contentMain">
@@ -221,7 +221,7 @@ h5{
 							<p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="fieldError"
 							style=" text-align: left; font-size: 15px !important;"></p>
 						<div class="box3">
-							<textarea th:field="*{content}" class="content"  placeholder="내용을 입력해주세요">
+							<textarea th:field="*{content}" class="content"  placeholder="내용을 입력해주세요" maxlength="1200">
 							</textarea>
 						</div>
 					</div>

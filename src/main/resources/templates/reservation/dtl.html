@@ -60,15 +60,6 @@ h3 {
 						<label th:for="count" class="form-label" >예약인원</label>
 						<p th:text="${items.count} + 명"></p>
 					</div>
-					<div class="mb-3">
-						<label th:for="reservedStatus" class="form-label" 
-						th:if="${#strings.equals(item.reservedStatus, 'RESERVATION')}" >예약상태</label>
-						<p th:text='예약완료'></p>
-						<th:block th:for="reservedStatus" class="form-label" 
-						th:unless="${#strings.equals(item.reservedStatus, 'RESERVATION')}" >
-						<p>예약취소</p>
-						</th:block>
-					</div>
 				</div>
 
 				<div>

@@ -45,12 +45,8 @@ public class ReservationController {
 		//전시 목록 가져와서 보여주기
 		List<NewItemDto> newItemDto = reservationService.getItemList();
 		
-		if (newItemDto.isEmpty()) {
-	        model.addAttribute("noItemsMessage", "현재 예약할 수 있는 전시가 없습니다.");
-	    } else {
-	        model.addAttribute("newItemDto", newItemDto);
-	    }
-		
+	    model.addAttribute("newItemDto", newItemDto);
+	    
 		return "reservation/item";
 	}
 	

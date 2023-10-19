@@ -159,7 +159,6 @@ public class MemberController {
 	public String deleteMember(Model model, Principal principal) {
 		
 		String userId = principal.getName();
-		System.out.println("userId===" + userId);
 		
 		Member member = memberRepository.findByUserId(userId);
 		
@@ -172,8 +171,9 @@ public class MemberController {
 		return "member/deleteMemberForm";
 	}
 	
+	//탈퇴기능
 	@PostMapping("/members/delMember")
-	public String deleteMember(@ModelAttribute DeleteMemberDto delMemberDto, Principal principal) {
+	public String deleteMember(@ModelAttribute DeleteMemberDto delMemberDto, Principal principal,Model model) {
 	    String userId = principal.getName();
 	    
 	    Member member = memberRepository.findByUserId(userId);
@@ -186,7 +186,15 @@ public class MemberController {
 	        SecurityContextHolder.clearContext(); // 로그아웃
 	        return "redirect:/members/logout"; 
 	    } else {
-	        return "redirect:/members/delMember";
+			
+	    	DeleteMemberDto delMemberDto2 = new DeleteMemberDto();
+	    	
+			delMemberDto2.setUserId(member.getUserId());
+			
+			model.addAttribute("delMemberDto", delMemberDto2);
+			model.addAttribute("deleteFailMessage", "탈퇴 실패 비밀번호를 확인해주세요.");
+	    	
+	        return "member/deleteMemberForm";
 	    }
 	}
 	
