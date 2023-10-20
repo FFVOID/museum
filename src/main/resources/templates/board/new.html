@@ -196,21 +196,12 @@ h2 {
 					</div>
 					
 				</div>
-				
-				<!-- 이미지 업로드  -->
-				<!-- <div class="box4">
-						<label for="boardImgs" class="boardImgs" >이미지 추가</label>
-						<input type="file" class="in upload-hidden" name="boardImgFile"
-							id="boardImgFile" accept="image/*" multiple="multiple">
-				</div> -->
-				
 				<div class="form-group row" th:each="num: ${#numbers.sequence(1,3)}">
 						<div class="col-md-12">
 						 	<label for="formFile" class="form-label" th:text="'첨부 이미지' + ${num}"></label>
 									<input class="form-control" type="file" id="boardImgFile" name="boardImgFile">
 						</div>
 				</div>
-				
 				<div class="newbtnMain">
 					<button type="submit" id="newbtn1"
 						class="newbtns">등록</button>
