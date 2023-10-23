@@ -51,16 +51,16 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 					if (member == null) {
 						SecurityContextHolder.getContext().setAuthentication(null);
 							Cookie email = new Cookie("email", email1);
-							email.setDomain("localhost");
+							email.setDomain("13.209.4.165");
 							email.setPath("/");
 			                Cookie provider = new Cookie("provider", provider1);
-			                provider.setDomain("localhost");
+			                provider.setDomain("13.209.4.165");
 			                provider.setPath("/");
 			                Cookie providerId = new Cookie("providerId", providerId1);
-			                providerId.setDomain("localhost");
+			                providerId.setDomain("13.209.4.165");
 			                providerId.setPath("/");
 			                Cookie name  = new Cookie("name", name1);
-			                name.setDomain("localhost");
+			                name.setDomain("13.209.4.165");
 			                name.setPath("/");
 			                
 			                response.addCookie(email);
