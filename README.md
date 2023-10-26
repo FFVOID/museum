@@ -31,5 +31,22 @@
 </div>
 
 ### 1.회원가입
+![회원가입1](https://github.com/FFVOID/museum/assets/130435247/11629366-dd15-4055-94fb-562e6c22729a)
 
+### 2.api를 이용한 회원가입
+![회원가입2](https://github.com/FFVOID/museum/assets/130435247/f2480fac-7921-4a79-b485-0696a26e0aef)
 
+### 3.전시등록,관리
+![전시관리](https://github.com/FFVOID/museum/assets/130435247/b4207e98-53d3-47c7-bdab-fe80ccc1f7d8)
+
+### 4.전시예약,취소,수정
+![전시예약,취소,수정](https://github.com/FFVOID/museum/assets/130435247/4c84a564-50ca-4a46-b61f-c1e57f35e01b)
+
+### 5.전시리스트,검색
+![전시리스트,검색](https://github.com/FFVOID/museum/assets/130435247/270d1a89-c1f7-4e8e-a7d9-b50656e72d71)
+
+### 6.게시판 글쓰기,수정,삭제 기능(이미지,댓글포함)
+![게시판글쓰기,수정,삭제(이미지포함,댓글)](https://github.com/FFVOID/museum/assets/130435247/c1ffbb18-79b8-4230-9318-b17dfe044c8f)
+
+### 7.회원탈퇴
+![회원탈퇴](https://github.com/FFVOID/museum/assets/130435247/15b03598-6800-42ae-ad6f-78f8be1e98be)
