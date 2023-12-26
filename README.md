@@ -35,7 +35,7 @@
 ![아키텍쳐](https://github.com/FFVOID/museum/assets/130435247/f274d2a9-f7a7-42dd-a822-5bbe505797f6)
 
 ### ERD 설계도
-![ERD](https://github.com/FFVOID/museum/assets/130435247/865dd36c-806a-4fea-9ab3-b3d147f9e08e)
+![ERD](https://github.com/FFVOID/museum/assets/130435247/6c8c76ae-6db1-48c7-8a39-432c2f88213d)
 
 ### 유스케이스 설계도
 ![유스케이스](https://github.com/FFVOID/museum/assets/130435247/5be48d04-dea3-49e8-815f-b9d0671cd68e)
