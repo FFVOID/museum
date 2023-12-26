@@ -46,7 +46,7 @@
 ### 2. api를 이용한 회원가입(카카오 로그인을 통해 간편가입)
 ![회원가입2](https://github.com/FFVOID/museum/assets/130435247/f2480fac-7921-4a79-b485-0696a26e0aef)
 
-### 3. 전시등록,관리
+### 3. 전시등록,관리(관리자 기능)
 ![전시관리](https://github.com/FFVOID/museum/assets/130435247/b4207e98-53d3-47c7-bdab-fe80ccc1f7d8)
 
 ### 4. 전시예약,취소,수정
