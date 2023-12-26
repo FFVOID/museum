@@ -5,20 +5,19 @@
 
 <div align="center">
   <h4>사용기술</h4>
-	<img src="https://img.shields.io/badge/Eclipse IDE-2C2255?style=flat&logo=Eclipse IDE&logoColor=white" />
-	<img src="https://img.shields.io/badge/Java-007396?style=flat&logo=Java&logoColor=white" />
-	<img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white" />
-	<img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=CSS3&logoColor=white" />
+	<h5>백엔드</h5>
+		<img src="https://img.shields.io/badge/Eclipse IDE-2C2255?style=flat&logo=Eclipse IDE&logoColor=white" />
+		<img src="https://img.shields.io/badge/Java-007396?style=flat&logo=Java&logoColor=white" />
+		<img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white" />
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=JavaScript&logoColor=white" />
   <img src="https://img.shields.io/badge/jQuery-0769AD?style=flat&logo=jQuery&logoColor=white" />
-</div>
-<div align="center">
 	<img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white" />
 	<img src="https://img.shields.io/badge/Spring-6DB33F?style=flat&logo=Spring&logoColor=white" />
 	<img src="https://img.shields.io/badge/AWS-232F3E?style=flat&logo=Amazon AWS&logoColor=white" />
+	<h5>프론트</h5>
+	<img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=CSS3&logoColor=white" />
   <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat&logo=Bootstrap&logoColor=white" />
   <img src="https://img.shields.io/badge/Thymeleaf-005F0F?style=flat&logo=Thymeleaf&logoColor=white" />
- 
 </div>
 
 <div align="center">
@@ -31,6 +30,9 @@
   <P>6. 게시판 글쓰기,수정,삭제 기능(이미지포함)</P>
   <P>7. 회원탈퇴</P>
 </div>
+
+### 아키텍쳐
+![아키텍쳐](https://github.com/FFVOID/museum/assets/130435247/f274d2a9-f7a7-42dd-a822-5bbe505797f6)
 
 ### ERD 설계도
 ![ERD](https://github.com/FFVOID/museum/assets/130435247/865dd36c-806a-4fea-9ab3-b3d147f9e08e)
