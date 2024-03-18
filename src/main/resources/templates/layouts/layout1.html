@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Museum</title>
+
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/templatemo.css}">
+<link rel="stylesheet" th:href="@{/css/custom.css}">
+
+<!-- Load fonts style after rendering the layout styles -->
+<link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap}">
+<link rel="stylesheet" th:href="@{/css/fontawesome.min.css}">
+
+<th:block layout:fragment="css"></th:block>
+
+</head>
+<body>
+	<div>
+		<div th:replace="fragments/header::header"></div>
+		<div layout:fragment="content"></div>
+		<div th:replace="fragments/footer::footer"></div>
+	</div>
+
+    <!-- Start Script -->
+    <script th:src="@{/js/jquery-1.11.0.min.js}"></script>
+    <script th:src="@{/js/jquery-migrate-1.2.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/templatemo.js}"></script>
+    <script th:src="@{/js/custom.js}"></script>
+    <!-- End Script -->
+	
+	<th:block layout:fragment="script"></th:block>
+
+</body>
+</html>

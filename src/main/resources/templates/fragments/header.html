@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+
+<!-- Header -->
+<div th:fragment="header">
+	<style>
+	.navbar-nav{
+		justify-content: flex-end !important;
+		margin-right: 20px !important;	
+	}
+	
+	.nav-link{
+		font-size: 17px !important;
+	}
+	</style>
+
+	<nav class="navbar navbar-expand-lg navbar-light shadow">
+		<div
+			class="container d-flex justify-content-between align-items-center">
+
+			<a class="navbar-brand text-success logo h1 align-self-center"
+				href="/"> 박물관 </a>
+
+			<button class="navbar-toggler border-0" type="button"
+				data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div
+				class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between"
+				id="templatemo_main_nav">
+				<div class="flex-fill">
+					<ul
+						class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+						<li class="nav-item"><a class="nav-link" 
+							href="/exhibition/list" >전시리스트</a></li>
+						<th:if test="${newItemDto != null and not #lists.isEmpty(newItemDto)}">	
+						<li class="nav-item"><a class="nav-link"
+							href="/reservation/item" sec:authorize="isAuthenticated()">관람예약</a>
+						</li>
+						</th:if>
+						<li class="nav-item"><a class="nav-link"
+							href="/reservation/list" sec:authorize="isAuthenticated()">예약내역</a>
+						</li>
+						<li class="nav-item"><a class="nav-link" href="/boards/list"
+							sec:authorize="isAuthenticated()">게시판</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="/members/login" sec:authorize="isAnonymous()">로그인</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="/members/logout" sec:authorize="isAuthenticated()">로그아웃</a>
+						</li>
+						<li class="nav-item"><a class="nav-link"
+							href="/members/delMember" sec:authorize="isAuthenticated()">회원탈퇴</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="dropdown" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+				<button class="btn dropdown-toggle nav-link" type="button"
+					data-bs-toggle="dropdown" aria-expanded="false"
+					style="color: black;font-size: 18px">관리자메뉴</button>
+				<ul class="dropdown-menu">
+					<li><a class="dropdown-item" href="/admin/newItem">전시등록</a></li>
+					<li><a class="dropdown-item" href="/admin/itemList">전시관리</a></li>
+				</ul>
+			</div>
+			
+		</div>
+	</nav>
+</div>
+<!-- Close Header -->
+</html>

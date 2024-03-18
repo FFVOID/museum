@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<th:block layout:fragment="css">
+	<style>
+		
+		a {
+			cursor: pointer
+		}
+		
+		h2 {
+			margin-top: 30px !important; 
+			margin-bottom: 20px;		
+		}
+		
+		.pagination{
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+		
+		.searchBtn{
+			margin-bottom: 30px;
+			margin-top: 30px;
+		}
+		
+		.searchmain{
+			width: 800px;
+		}
+		
+		.mainbtn{
+			margin-bottom: 30px;
+			margin-top: 30px;
+			
+		}
+		
+		.mainbtn > a{
+			text-decoration: none;
+			color :black;
+			font-size: 30px !important;
+			font-weight: 500 !important;
+		}
+		
+		.itemName{
+			text-decoration: none;
+			color :black;
+		}
+		
+	</style>
+</th:block>
+
+<div layout:fragment="content">
+		<div class="site-section">
+		<div class="container searchmain">
+			<div class="row">
+				<div class="row">
+				<div class="mainbtn">
+					<a href="/admin/itemList">전시 관리</a>
+				</div>
+					<form th:action="@{'/admin/itemList/' + ${itemList.number}}" method="get" th:object="${itemList}">
+						<div class="table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th scope="col">ID</th>
+										<th scope="col">전시명</th>
+										<th scope="col">등록자</th>
+									</tr>
+								</thead>
+								<tbody>
+									<!-- 조회된 데이터를 출력한다  -->
+									<tr th:each="itemList, status: ${itemList.getContent()}">
+										<th th:text="${itemList.id}"scope="row"></th>
+										<td>
+											<a th:href="'/admin/item/' + ${itemList.id}" th:text="${itemList.itemNm}"  class="itemName"></a>
+										</td>
+										<td th:text="${itemList.createBy}"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<!-- 페이징버튼  -->
+						<!-- start = (현재 페이지 번호/보여줄 페이지수) * 보여줄 페이지수 + 1, 페이지 시작번호 -->
+						<!-- end = start + (보여줄 페이지수 - 1), 페이지 끝번호 -->
+						<!--  
+							 끝번호가 전체페이지 보다 작으면 그냥 끝번호를 쓴다
+							 예) 전체 페이지 7, 끝번호 5
+							 ◀ 1 2 3 4 5 ▶
+							 ◀ 6 7
+						-->
+						<nav th:with="start=${(itemList.number / maxPage) * maxPage + 1},
+						              end=(${(itemList.totalPages == 0)? 1: 
+						              (start + (maxPage - 1) < itemList.totalPages ? 
+						              start + (maxPage - 1) : itemList.totalPages)})" aria-label="...">
+							<ul class="pagination d-flex justify-content-center">
+								<li class="page-item" th:classappend="${itemList.first} ? 'disabled'" >
+									<a class="page-link" th:onclick="'javascript:page(' + ${itemList.number - 1} + ')'">이전</a>
+								</li>
+								<li class="page-item" th:each="page: ${#numbers.sequence(start, end)}"
+													  th:classappend="${itemList.number eq page - 1} ? 'active' : ''">
+									<a class="page-link" th:inline="text" th:onclick="'javascript:page(' + ${page - 1} + ')'">
+										[[${page}]]
+									</a>
+								</li>
+								<li class="page-item" th:classappend="${itemList.last} ? 'disabled'" >
+									<a class="page-link" th:onclick="'javascript:page(' + ${itemList.number + 1} + ')'">다음</a>
+								</li>
+							</ul>
+						</nav>
+						<div style="display: flex;justify-content: center;" th:object="${itemSearchDto}" class="searchBtn">
+							<div>
+								<select class="form-select" aria-label="Default select example" th:field="*{searchBy}">
+								  <option value="itemNm">전시명</option>
+								  <option value="createBy">등록자</option>
+								</select>
+							</div>&nbsp;&nbsp;&nbsp;
+							<div>
+								<input type="text" class="form-control" placeholder="검색어 입력" style="height: 38px;" th:field="*{searchQuery}">
+							</div>&nbsp;&nbsp;&nbsp;
+								<button id="searchBtn" type="submit" class="btn btn-primary">검색</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+	$(document).ready(function(){
+		
+		$("#searchBtn").on("click", function(e){
+			e.preventDefault(); //submit되는걸 방지
+			page(0); //검색버튼 누르면 무조건0페이지
+		});
+	});
+	
+	//페이징버튼을 눌렀을때 , 검색버튼 눌렀을때 검색어와 selectbox를 get방식으로 주소이동시켜준다
+	function page(page){
+		var searchBy = $("#searchBy").val();
+		var searchQuery = $("#searchQuery").val();
+		
+		//주소이동
+		location.href = "/admin/itemList/" + page
+						+ "?searchBy=" + searchBy
+						+ "&searchQuery=" + searchQuery;
+	}
+	</script>
+</th:block>
+
+</html>

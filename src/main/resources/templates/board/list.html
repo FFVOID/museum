@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<th:block layout:fragment="css">
+	<style>
+h1 {
+	text-align: center;
+	font-weight: bold;
+	margin-bottom: 40px;
+	margin-top: 40px;
+}
+
+.table{
+	color:black;
+}
+
+.borders{
+	margin-bottom: 100px !important;
+}
+
+.searchBtn{
+	margin-bottom: 30px;
+	margin-top: 30px;
+}
+
+h5{
+ text-align: center;
+ margin-bottom: 30px;
+}
+
+ a:hover {
+ text-decoration: underline !important;
+}
+
+tr:hover {
+    background-color: lightblue;
+}
+
+tr.no-hover:hover {
+    background-color: initial !important;
+  }
+  
+
+	</style>
+</th:block>
+
+<div layout:fragment="content">
+	<div class="container borders">
+		<h1>게시판</h1>
+		<h5>박물관과 소장품에 대해 자유롭게 이야기를 나눠보세요!</h5>
+		<form th:action="@{'/boards/list/' + ${boardList.number}}" method="get" th:object="${boardList}">
+			<div class="row">
+				<div class="col-1"></div>
+				<div class="col-10">
+					<table class="table">
+						<thead>
+							<tr class="no-hover" style="text-align: center;border-top: solid 2px;font-size: 18px;">
+								<th scope="col">번호</th>
+								<th scope="col">제목</th>
+								<th scope="col">댓글수</th>
+								<th scope="col">작성자</th>
+								<th scope="col">등록일</th>
+								<th scope="col">조회</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="boardList, status: ${boardList.getContent()}" style="text-align: center;font-size: 17px;">
+								<th th:text="${boardList.id}" scope="row"></th>
+								<td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left !important;">
+									<a th:href="'/boards/view/' + ${boardList.id}" th:text="${boardList.title}" style="text-decoration: none; color :black;">
+									</a>
+								</td>
+								<td th:text="${boardList.commentCount}" style="font-weight: bold;"></td>
+								<td th:text="${boardList.writer}"></td>
+								<td th:text="${#temporals.format(boardList.regTime, 'MM.dd HH:mm:ss')}"></td>
+								<td th:text="${boardList.count}" ></td>
+							</tr>
+						</tbody>
+					</table>
+					<div style="text-align: right;">
+						<button type="button" onclick="location.href='/boards/new'" class="btn btn-success" style="width:90px;" >글쓰기</button>
+					</div>
+				</div>
+				<div class="col-1"></div>
+			</div>
+ 				 <nav th:with="start=${(boardList.number / maxPage) * maxPage + 1},
+						              end=(${(boardList.totalPages == 0)? 1: 
+						              (start + (maxPage - 1) < boardList.totalPages ? 
+						              start + (maxPage - 1) : boardList.totalPages)})" aria-label="...">
+							<ul class="pagination pagination-sm d-flex justify-content-center">
+								<li class="page-item" th:classappend="${boardList.first} ? 'disabled'" >
+									<a class="page-link" th:onclick="'javascript:page(' + ${boardList.number - 1} + ')'">이전</a>
+								</li>
+								<li class="page-item" th:each="page: ${#numbers.sequence(start, end)}"
+													  th:classappend="${boardList.number eq page - 1} ? 'active' : ''">
+									<a class="page-link" th:inline="text" th:onclick="'javascript:page(' + ${page - 1} + ')'">
+										[[${page}]]
+									</a>
+								</li>
+								<li class="page-item" th:classappend="${boardList.last} ? 'disabled'" >
+									<a class="page-link" th:onclick="'javascript:page(' + ${boardList.number + 1} + ')'">다음</a>
+								</li>
+							</ul>
+					</nav>
+						<div style="display: flex;justify-content: center;" th:object="${boardSearchDto}" class="searchBtn">
+							<div>
+								<select class="form-select" aria-label="Default select example" th:field="*{searchBy}">
+								  <option value="writer">작성자</option>
+								  <option value="title">제목</option>
+								  <option value="content">내용</option>
+								</select>
+							</div>&nbsp;&nbsp;&nbsp;
+							<div>
+								<input type="text" class="form-control" placeholder="검색어 입력" style="height: 38px; width:300px;" th:field="*{searchQuery}">
+							</div>&nbsp;&nbsp;&nbsp;
+								<button id="searchBtn" type="submit" class="btn btn-success">검색</button>
+						</div>
+		</form>
+	</div>
+</div>
+
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+	$(document).ready(function(){
+		
+		$("#searchBtn").on("click", function(e){
+			e.preventDefault(); 
+			page(0); 
+		});
+	});
+	
+	function page(page){
+		var searchBy = $("#searchBy").val();
+		var searchQuery = $("#searchQuery").val();
+		
+		location.href = "/boards/list/" + page
+						+ "?searchBy=" + searchBy
+						+ "&searchQuery=" + searchQuery;
+	}
+	</script>
+</th:block>
+
+</html>

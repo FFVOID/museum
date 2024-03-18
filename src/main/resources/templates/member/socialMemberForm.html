@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<th:block layout:fragment="css">
+	<style>
+.fieldError {
+color: #bd2130;
+}
+
+.memberForm{
+width: 500px;
+margin-top: 50px;
+margin-bottom: 50px;
+}
+
+h2{
+	margin-bottom: 30px;
+}
+	
+.kakaoLogin {
+border: none;
+background-color: white;
+cursor: pointer;
+}
+
+.snsBtn{
+	text-align: center;
+}
+
+.joinBtn{
+	margin-top: 15px;
+	text-align: center;
+}
+
+.btn-primary{
+	width: 150px;
+}
+	</style>
+</th:block>
+
+<div layout:fragment="content">
+		<div class="container memberForm">
+		<div class="row">
+			<h2>간편 회원가입</h2>
+			<form role="form" action="/members/newSocial" method="post" th:object="${socialMemberDto}">
+				<div>
+					<div class="mb-3">
+						<label th:for="userId" class="text-black">아이디(게시판,로그인에서 사용할 아이디 입니다)</label>
+						<input type="text" class="form-control" th:field="*{userId}">
+						<p th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}" class="fieldError">Incorrect Data</p>
+						<!-- 에러 메시지 표시 -->
+                    	<p th:if="${errorMessage}" class="fieldError" th:text="${errorMessage}"></p>
+					</div>
+					<div class="mb-3">
+						<label th:for="password" class="text-black">비밀번호</label>
+						<input type="password" class="form-control" th:field="*{password}">
+						<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError">Incorrect Data</p>
+					</div>
+					<input type="hidden" th:field="*{email}" th:value="${socialMemberDto.email}">
+					<input type="hidden"th:field="*{provider}" th:value="${socialMemberDto.provider}">
+					<input type="hidden"th:field="*{providerId}" th:value="${socialMemberDto.providerId}">
+					<input type="hidden"th:field="*{name}" th:value="${socialMemberDto.name}">
+				</div>
+
+				<div>
+					<div class="joinBtn">
+						<button type="submit" class="btn btn-primary mb-3" id="loginbtn">가입</button>
+						&nbsp;
+						<button type="button" class="btn btn-primary mb-3"  onclick="location.href='/'">취소</button>
+					</div>
+				</div>
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+			</form>
+		</div>
+	</div>
+</div>
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+	$(document).ready(function() {
+		 
+        var errorMessage = [[${errorMessage}]];
+        
+        $('#loginbtn').click(function() {
+            if (errorMessage == null) {
+                var confirm2 = confirm("가입 하시겠습니까?");
+                if (confirm2) {
+                    alert("가입 성공");
+                }
+            } else {
+                alert("가입 실패.");
+            }
+        });
+    });
+	
+		</script>
+</th:block>
+
+</html>

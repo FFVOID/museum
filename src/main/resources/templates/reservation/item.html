@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<head>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<!-- ajax를 이용해서 정보를 넘기기위해사용 , 보안관련-->
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+
+<th:block layout:fragment="css">
+
+	<style>
+.form-group {
+	text-align: center;
+}
+
+.loginform {
+	width: 500px;
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+h2 {
+	margin-bottom: 30px;
+}
+
+.imgs>img {
+	height: 500px;
+	}
+	
+	.mx-auto > img {
+		weight: 500px;
+		height: 500px;
+		
+	}
+	
+
+</style>
+</th:block>
+
+<div layout:fragment="content">
+				<div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
+			        <div class="carousel-inner">
+			            <div class="carousel-item active">
+			                <div class="container">
+			                    <div class="row p-5">
+			                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+			                            <img class="img-fluid" src="/img/회연도.jpg" alt="">
+			                        </div>
+			                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+			                            <div class="text-align-left align-self-center">
+			                                <h1 class="h1 text-success"><b></b>환영합니다</h1>
+			                                <p>보물 - 연정계회도(1986)
+			                                </p>
+			                            </div>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			            <div class="carousel-item">
+			                <div class="container">
+			                    <div class="row p-5">
+			                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+			                            <img class="img-fluid" src="/img/금관.jpg" alt="">
+			                        </div>
+			                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+			                            <div class="text-align-left">
+			                                <h1 class="h1">환영합니다</h1>
+			                                <h3 class="h2"></h3>
+			                                <p>	보물 - 금령총 금관(1963)
+			                                </p>
+			                            </div>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			            <div class="carousel-item">
+			                <div class="container">
+			                    <div class="row p-5">
+			                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+			                            <img class="img-fluid" src="/img/금동약사불입상.jpg" alt="">
+			                        </div>
+			                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+			                            <div class="text-align-left">
+			                                <h1 class="h1">환영합니다</h1>
+			                                <h3 class="h2"></h3>
+			                                <p>보물 - 금동약사여래입상(1963)
+			                                </p>
+			                            </div>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+			        <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="prev">
+			            <i class="fas fa-chevron-left"></i>
+			        </a>
+			        <a class="carousel-control-next text-decoration-none w-auto pe-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="next">
+			            <i class="fas fa-chevron-right"></i>
+			        </a>
+			        </div>
+				<div class="container loginform">
+					<div class="row">
+					
+	<!-- 예약 페이지 -->
+			<h2>관람예약</h2>
+				<div>
+					<div class="mb-3">
+						<label th:for="reservationItenNm" class="form-label">예약자명</label> 
+						<input type="text" class="form-control" id="reservedNm" name="reservedNm">
+					</div>
+					<div class="mb-3">
+						<p style="margin-bottom: 10px">전시 리스트</p>
+						<select th:value="${Id}" id="itemId" class="form-select" th:object="${newItemDto}" aria-label="Default select example">
+						  <option selected>전시선택</option>
+						  <option th:value="${item.id}" th:each="item : ${newItemDto}">
+						        <span th:text="|${item.itemNm} 기간: ${item.itemDate}&nbsp;&nbsp;&nbsp;&nbsp; |"></span>
+						        <span th:text="|남은 예약 인원 [${item.stock}/100]|"></span>
+						  </option>
+						</select>
+					</div>
+					<div class="mb-3">
+						<label th:for="reservationDate" class="form-label">예약날짜</label> 
+						<input type="date" id="date" class="form-control">
+					</div>
+					<div class="mb-3">
+						<label th:for="reservationCount" class="form-label">예약인원</label> 
+						<input type="number" min="1" max="10" value="1" class="form-control" id="count" name="count">
+					</div>
+				</div>
+				<div>
+					<p th:if="${loginErrorMsg}" class="error" th:text="${loginErrorMsg}"></p>
+					<div>
+						<button type="button" class="btn btn-primary mb-3" id="loginbtn" onclick="reservation()">예약</button>
+						&nbsp;
+						<button type="button" class="btn btn-primary mb-3"
+							onclick="location.href='/'">취소</button>
+					</div>
+				</div>
+		</div>
+	</div>
+</div>
+
+<th:block layout:fragment="script">
+
+	<script th:inline="javascript">
+	$(document).ready(function(){
+
+	});
+	
+	
+	function reservation(){
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		
+		if(confirm("예약 하시겠습니까?")){
+			var url = "/reservation/item"; 
+			
+			//여기서 날짜변환?
+			var paramData = {
+					
+					itemId : $("#itemId").val(),
+					count : $("#count").val(), //예약 인원수
+					reservedNm : $("#reservedNm").val(),
+					date : $("#date").val(),
+					
+	
+			}
+			
+			//★전달하기 전에 데이터를 반드시 JSON객체에서 문자열(stringify)로 만들어야한다
+			var param = JSON.stringify(paramData);
+			
+				$.ajax({
+					url : url, //request URL
+					type : "POST", //전송방식
+					contentType : "application/json",
+					data : param, //서버에 전송할 데이터
+					beforeSend : function(xhr) { //데이터를 전송하기 전 헤더에 csrf값을 설정
+						xhr.setRequestHeader(header, token);
+					},
+					dataType : "json",
+					cache : false,
+					success : function(result, status) {
+						alert("예약이 완료 되었습니다");
+						window.location.href = '/';
+					},
+					error : function(jqXHR, status, error) {
+						if(jqXHR.status == '401') {
+							alert('로그인 후 이용해주세요')
+							location.href = '/members/login';
+						} else {
+							alert(jqXHR.responseText); //에러메세지(responseEntity에서 받아온 값) 출력
+						}
+					}
+				});
+		}
+		
+	}
+	
+	
+	</script>
+</th:block>
+
+</html>

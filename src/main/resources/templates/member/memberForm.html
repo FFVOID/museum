@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+<head>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+
+<th:block layout:fragment="css">
+	<style>
+.fieldError {
+color: #bd2130;
+}
+
+.memberForm{
+width: 500px;
+margin-top: 50px;
+margin-bottom: 50px;
+}
+
+h2{
+	margin-bottom: 30px;
+}
+
+.btn-primary{
+	width: 150px;
+}
+.joinBtn{
+	margin-top: 15px;
+	text-align: center;
+}
+.btn-sm{
+	width: 100px;
+	margin-top: 8px;
+	position: relative;
+    left: 370px;
+    bottom: 44px;
+}
+
+.form2{
+	height: 65px;
+}
+	
+	</style>
+</th:block>
+
+<div layout:fragment="content">
+		<div class="container memberForm">
+		<div class="row">
+			<h2>회원가입</h2>
+			<form role="form" action="/members/new" method="post" th:object="${memberFormDto}">
+				<div>
+					<div class="mb-3">
+						<label th:for="userId" class="text-black">아이디(게시판,로그인에서 사용할 아이디 입니다)</label>
+						<input type="text" class="form-control" th:field="*{userId}" maxlength="10">
+						<p th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}" class="fieldError">Incorrect Data</p>
+						<!-- 에러 메시지 표시 -->
+                    	<p th:if="${errorMessage}" class="fieldError" th:text="${errorMessage}"></p>
+					</div>
+					<div class="mb-3 form2">
+						<label th:for="email" class="text-black">이메일(이메일을 통해 인증 완료시 가입 가능)</label>
+						<input type="email" class="form-control" th:field="*{email}">
+						<button type="button" id="sendBtn" name="sendBtn" onclick="sendNumber()" class="btn btn-primary btn-sm">인증 요청</button>
+						<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError">Incorrect Data</p>
+					</div>
+					<label for="emailConfirm" class="emailConfirm ">인증번호<span class="check_all_box">(필수)</span></label>
+					<div class="emailConfirmMain form2">
+						<input type="text" placeholder="인증번호를 입력해주세요" class="form-control" th:field="*{emailConfirm}">
+						<input type="hidden" th:field="*{emailConfirm2}" >
+						<button type="button" class="emailbtn btn btn-primary btn-sm" onclick="confirmNumber()">인증 확인</button> 
+					</div>
+					<div class="mb-3">
+						<label th:for="password" class="text-black">비밀번호</label>
+						<input type="password" class="form-control" th:field="*{password}" maxlength="16">
+						<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError">Incorrect Data</p>
+					</div>
+				</div>
+
+				<div>
+					<div class="joinBtn">
+						<button type="submit" class="btn btn-primary mb-3" id="loginbtn">회원가입</button>
+						&nbsp;
+						<button type="button" class="btn btn-primary mb-3" onclick="location.href='/'">취소</button>
+					</div>
+				</div>
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+			</form>
+		</div>
+	</div>
+</div>
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		 
+        var errorMessage = [[${errorMessage}]];
+        
+	        $('#loginbtn').click(function() {
+	        	
+		        
+	            if (errorMessage == null) {
+	                var confirm2 = confirm("가입 하시겠습니까?");
+	                
+	                var email = $('#email').val();
+	                var userId = $('#userId').val();
+	                var password = $('#password').val();
+	                
+	                if (confirm2 && email != "" && userId != "" && password != "") {
+	                    alert("가입 성공");
+	                } else {
+	                	alert("가입 실패.");
+	                }
+	            } else {
+	                alert("가입 실패.");
+	            }
+	        });
+	    
+	
+		var numberSent = false;
+		var numberConfirmed = false;
+		
+	  //인증번호를 위한 이메일 전송 함수
+	  function sendNumber(){
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		
+		var email = $('#email').val();
+		var regexp = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
+		
+		if(email == null || email == ""){
+			alert("이메일을 입력해주세요")
+			numberSent = false;
+		} else if(regexp.test(email) != true){
+			alert("올바른 이메일을 입력해주세요")
+			numberSent = false;
+		}
+		
+		var paramData = {
+				email : $("#email").val(),
+		}
+		
+		var param = JSON.stringify(paramData);
+		
+	        $.ajax({
+	            url:"/email",
+	            type:"post",
+	            contentType : "application/json",
+	            dataType:"json",
+	            cache : false,
+	            data: param,
+	            beforeSend : function(xhr) { //데이터를 전송하기 전 헤더에 csrf값을 설정
+					xhr.setRequestHeader(header, token);
+				},
+	            success: function(result, status, jqXHR){
+	            	$("#emailConfirm2").val(result);
+	                alert("인증번호 발송 메일함을 확인해주세요.");
+	            	numberSent = true;
+	            	finalCk();
+	            },
+	            error : function(jqXHR, status, error) {
+					alert(jqXHR.responseText); //에러메세지(responseEntity에서 받아온 값) 출력
+					numberSent = false;
+					finalCk();
+				}
+		        
+	        });
+	    }
+	  
+		//메일로 보낸 인증번호와 사용자가 입력한 인증번호가 같은지 확인
+	    function confirmNumber(){
+	        var number1 = $("#emailConfirm").val();
+	        var number2 = $("#emailConfirm2").val();
+
+	        if(number1 == number2 && number1 != ""){
+	            alert("인증되었습니다.");
+	            numberConfirmed = true;
+	            finalCk();
+	        }else{
+	            alert("인증 실패. 인증번호가 다르거나 없습니다");
+	            numberConfirmed = false;
+	            return;
+	        }
+	        
+	    }
+		
+	    function finalCk() {
+	        if (numberSent && numberConfirmed) {
+	        	checkLogin();
+	        }
+	    }
+	    
+		</script>
+</th:block>
+
+</html>

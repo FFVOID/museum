@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+<head>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+
+<th:block layout:fragment="css">
+	<style>
+	
+.delMemberForm{
+width: 500px;
+margin-top: 50px;
+margin-bottom: 50px;
+}
+
+h2{
+	margin-bottom: 30px;
+}
+
+.btn-primary{
+	width: 150px;
+}
+.joinBtn{
+	margin-top: 15px;
+	text-align: center;
+}
+.btn-sm{
+	width: 100px;
+	margin-top: 8px;
+	position: relative;
+    left: 370px;
+    bottom: 44px;
+}
+
+.form2{
+	height: 65px;
+}
+
+.fieldError {
+color: #bd2130;
+}
+	
+	</style>
+</th:block>
+
+<div layout:fragment="content">
+	<div class="container delMemberForm">
+		<div class="row">
+			<h2>회원탈퇴</h2>
+			<form role="form" action="/members/delMember" method="post" th:object="${delMemberDto}">
+				<div>
+					<div class="mb-3">
+						<label th:for="userId" class="text-black">현재 접속중인 아이디</label>
+						<input type="text" class="form-control" th:field="*{userId}" disabled="disabled">
+					</div>
+					<div class="mb-3">
+						<label th:for="password" class="text-black">비밀번호</label>
+						<input type="password" class="form-control" th:field="*{password}" maxlength="16" placeholder="사용중인 비밀번호를 입력해주세요(8~16자리)">
+						<p th:if="${deleteFailMessage}" class="fieldError" th:text="${deleteFailMessage}"></p>
+					</div>
+				</div>
+				<div>
+					<div class="joinBtn">
+						<button type="submit" class="btn btn-primary mb-3" id="delbtn">탈퇴</button>
+						&nbsp;
+						<button type="button" class="btn btn-primary mb-3" onclick="location.href='/'">취소</button>
+					</div>
+				</div>
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+			</form>
+		</div>
+	</div>
+</div>
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		
+	        $('#delbtn').click(function() {
+	           
+	            var password = $('#password').val();
+
+	            if (password != "") {
+	                confirm("탈퇴 하시겠습니까?");
+	            } else {
+	                alert("비밀번호를 입력해주세요.");
+	                event.preventDefault(); //폼 제출 막음
+	            }
+	            
+	        });
+	   		
+	</script>
+</th:block>
+
+</html>

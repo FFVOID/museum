@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+	
+<th:block layout:fragment="css">
+	<style>
+		a {
+			cursor: pointer
+		}
+		
+		
+		h2 {
+			margin-top: 30px !important; 
+			margin-bottom: 20px;		
+		}
+		
+		
+		.pagination{
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+		
+		.searchBtn{
+			margin-bottom: 30px;
+			margin-top: 30px;
+		}
+		
+		.searchmain{
+			width: 800px;
+		}
+		
+		.mainbtn{
+			margin-bottom: 30px;
+			margin-top: 30px;
+			
+		}
+		
+		.mainbtn > a{
+			text-decoration: none;
+			color :black;
+			font-size: 30px !important;
+			font-weight: 500 !important;
+		}
+		
+		.exName{
+			text-decoration: none;
+			color :black;
+		}
+	</style>
+</th:block>
+
+<div layout:fragment="content">
+		<div class="site-section">
+		<div class="container searchmain">
+			<div class="row">
+				<div class="row">
+				<div class="mainbtn">
+					<a href="/exhibition/list">전시 리스트</a>
+					<p th:if="${noItemMessage}" class="fieldError" th:text="${noItemMessage}"></p>
+				</div>
+					<form th:action="@{'/exhibition/dtl' + ${itemList.number}}" method="get" th:object="${itemList}">
+						<div class="row">
+						    <div class="col-md-4" th:each="itemList, status: ${itemList.getContent()}">
+						        <div class="card mb-3" style="height: 440px; max-width: 15rem;">
+						            <img class="card-img-top" alt="..." th:src="${itemList.itemImgs[0].imgUrl}" style="height: 260px;">
+						            <div class="card-body">
+						                <h5 class="card-title" th:text="${itemList.itemNm}"></h5>
+						                <!-- 상세내용:<p class="card-text" th:text="${itemList.itemDetail}"></p> -->
+						                <p class="card-text" th:text="'전시날짜: '+${itemList.itemDate}"></p>
+						                <a th:href="@{'/exhibition/' + ${itemList.id}}" class="btn btn-primary btn-sm">전시상세</a>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+						<nav th:with="start=${(itemList.number / maxPage) * maxPage + 1},
+						              end=(${(itemList.totalPages == 0)? 1: 
+						              (start + (maxPage - 1) < itemList.totalPages ? 
+						              start + (maxPage - 1) : itemList.totalPages)})" aria-label="...">
+							<ul class="pagination d-flex justify-content-center">
+								<li class="page-item" th:classappend="${itemList.first} ? 'disabled'" >
+									<a class="page-link" th:onclick="'javascript:page(' + ${itemList.number - 1} + ')'">이전</a>
+								</li>
+								<li class="page-item" th:each="page: ${#numbers.sequence(start, end)}"
+													  th:classappend="${itemList.number eq page - 1} ? 'active' : ''">
+									<a class="page-link" th:inline="text" th:onclick="'javascript:page(' + ${page - 1} + ')'">
+										[[${page}]]
+									</a>
+								</li>
+								<li class="page-item" th:classappend="${itemList.last} ? 'disabled'" >
+									<a class="page-link" th:onclick="'javascript:page(' + ${itemList.number + 1} + ')'">다음</a>
+								</li>
+							</ul>
+						</nav>
+						<div style="display: flex;justify-content: center;" th:object="${itemSearchDto}" class="searchBtn">
+							<div>
+								<select class="form-select" aria-label="Default select example" th:field="*{searchBy}">
+								  <option value="itemNm">전시명</option>
+								  <option value="itemDate">전시날짜</option>
+								</select>
+							</div>&nbsp;&nbsp;&nbsp;
+							<div>
+								<input type="text" class="form-control" placeholder="검색어 입력" style="height: 38px;" th:field="*{searchQuery}">
+							</div>&nbsp;&nbsp;&nbsp;
+								<button id="searchBtn" type="submit" class="btn btn-primary">검색</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+	$(document).ready(function(){
+		
+		$("#searchBtn").on("click", function(e){
+			e.preventDefault(); //submit되는걸 방지
+			page(0); //검색버튼 누르면 무조건0페이지
+		});
+	});
+	
+	function page(page){
+		var searchBy = $("#searchBy").val();
+		var searchQuery = $("#searchQuery").val();
+		
+		//주소이동
+		location.href = "/exhibition/list/" + page
+						+ "?searchBy=" + searchBy
+						+ "&searchQuery=" + searchQuery;
+	}
+	</script>
+</th:block>
+
+</html>

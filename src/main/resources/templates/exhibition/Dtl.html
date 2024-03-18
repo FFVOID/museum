@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<head>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<!-- ajax를 이용해서 정보를 넘기기위해사용 , 보안관련-->
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+
+<th:block layout:fragment="css">
+	<style>
+	
+
+.main {
+	justify-content: center;
+	text-align: center;
+}
+
+.itemImgs>img {
+	height: 520px;
+}
+
+.mains {
+	display: block;
+}
+
+.mainsitem{
+	display: flex;
+	justify-content: center;
+}
+
+.mb-4 {
+ width: 33%;
+ margin-right: 10px;
+}
+
+.title{
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.btn-primary{
+	margin-bottom: 10px;
+}
+</style>
+</th:block>
+
+<div layout:fragment="content">
+	<div class="bg-light py-3">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 mb-0">
+					<strong class="text-black">전시상세</strong>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="site-section">
+		<div class="container">
+			<div class="row main">
+				<input type="hidden" id="exhibitionId" th:value="${exhibition.id}">
+				<!-- form태그는 동기, 여기서는 비동기 -->
+				<div>
+					<h1 class="text-black title" th:text="${exhibition.itemNm}"></h1>
+					<h3>전시 설명</h3>
+					<p style="white-space:pre;" th:text= "${exhibition.itemDetail}"></p>
+					<h4>전시 기간</h4>
+					<h3 th:text="${exhibition.itemDate}"></h3>
+					<button type="button" class="btn btn-primary" onclick="location.href='/reservation/item'">예약하기</button>
+					<h5 style="text-align: center;">소장품</h5>
+				</div>
+				<div th:if="${param.login_error}" class="alert alert-danger">
+				    로그인이 필요합니다.
+				</div>
+				<div class="row mains">
+						<div class="col-md-12 mainsitem">
+					<th:block th:if="${not #lists.isEmpty(exhibition.itemImgDtoList)}" 
+							th:each="itemImg, status : ${exhibition.itemImgDtoList}">
+							<div class="card mb-4 product-wap rounded-0" th:if="${not #lists.isEmpty(itemImg.imgUrl)}">
+								<div class="card rounded-0  itemImgs" >
+									<img th:src="${itemImg.imgUrl}" 
+									class="card-img-top" th:alt="${itemImg.oriImgName}">
+								</div>
+								<div class="card-body" >
+									<p class="text-center mb-0"
+										th:text="${#strings.replace(itemImg.oriImgName, '.jpg' ,'')}"></p>
+								</div>
+							</div>
+						</div>
+					</th:block>
+				</div>
+			</div>
+		</div>
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+	</div>
+</div>
+
+
+
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+	
+	</script>
+</th:block>
+</html>
