@@ -26,7 +26,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 	
 	private final MemberRepository memberRepository;
 	
-	// 간편 로그인 성공시 정보를 sns전용 회원가입 페이지로 전달
+	//간편 로그인 성공시 정보를 sns전용 회원가입 페이지로 전달
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 		
@@ -46,16 +46,16 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 					
 					SecurityContextHolder.getContext().setAuthentication(null);
 					Cookie email = new Cookie("email", email1);
-					email.setDomain("localhost");
+					email.setDomain("43.202.3.22");
 					email.setPath("/");
 	                Cookie provider = new Cookie("provider", provider1);
-	                provider.setDomain("localhost");
+	                provider.setDomain("43.202.3.22");
 	                provider.setPath("/");
 	                Cookie providerId = new Cookie("providerId", providerId1);
-	                providerId.setDomain("localhost");
+	                providerId.setDomain("43.202.3.22");
 	                providerId.setPath("/");
 	                Cookie name  = new Cookie("name", name1);
-	                name.setDomain("localhost");
+	                name.setDomain("43.202.3.22");
 	                name.setPath("/");
 	                
 	                response.addCookie(email);

@@ -36,14 +36,14 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 		if("kakao".equals(provider)) { 
     	    oAuth2UserInfo = new KakaoUserInfo(oAuth2User.getAttributes()); 
     	} else {
-    	    // 적절한 예외 처리 또는 로깅
+    	    //적절한 예외 처리 또는 로깅
     	    throw new RuntimeException("지원하지 않는 OAuth 제공자입니다.");
     	}
 		  
 	    String providerId = oAuth2UserInfo.getProviderId();
 	    String username = oAuth2UserInfo.getName();  	
 	    String uuid = UUID.randomUUID().toString().substring(0, 6);
-	    String password = passwordEncoder.encode("패스워드"+uuid);  // 사용자가 입력한 적은 없지만 만들어준다
+	    String password = passwordEncoder.encode("패스워드"+uuid);  //사용자가 입력한 적은 없지만 만들어준다
 		 
 	    String email = oAuth2UserInfo.getEmail();
 	    Role role = Role.USER;
