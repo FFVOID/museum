@@ -76,7 +76,7 @@ public class AdminController {
 		model.addAttribute("itemSearchDto", itemSearchDto);
 		model.addAttribute("maxPage", 5);
 		
-		return "/admin/itemList";
+		return "admin/itemList";
 		
 	}
 	
@@ -149,7 +149,7 @@ public class AdminController {
 		model.addAttribute("itemSearchDto", itemSearchDto);
 		model.addAttribute("maxPage", 5);
 		
-		return "/exhibition/list";
+		return "exhibition/list";
 	}
 	
 	//전시 상세 페이지

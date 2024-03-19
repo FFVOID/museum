@@ -84,7 +84,7 @@ public class BoardController {
 		model.addAttribute("boardSearchDto", boardSearchDto);
 		model.addAttribute("maxPage", 5);
 		
-		return "/board/list";
+		return "board/list";
 	}
 	
 	//게시글 상세 페이지
@@ -129,7 +129,7 @@ public class BoardController {
 			@RequestParam("boardImgFile") List<MultipartFile> boardImgFileList) {
 		
 		if(bindingResult.hasErrors()) {
-			return "/board/modify";
+			return "board/modify";
 		}
 		
 		try {
