@@ -13,7 +13,6 @@ import lombok.*;
 @Entity
 @Table(name="reservation")
 @Getter
-@Setter
 @ToString
 public class Reservation extends BaseEntity {
 	
@@ -43,15 +42,15 @@ public class Reservation extends BaseEntity {
 	@JoinColumn(name="reserved_id")
 	private Reserved reserved;
 	
-	//예약생성
+	//예약생성메서드
 	public static Reservation createReservation(Item item , String reservedNm, LocalDate date, int count) {
 		
 		Reservation reservation = new Reservation();
 		
-		reservation.setItem(item);
-		reservation.setReservedNm(reservedNm);
-		reservation.setDate(date);
-		reservation.setCount(count);
+		reservation.item = item;
+		reservation.reservedNm = reservedNm;
+		reservation.date = date;
+		reservation.count = count;
 		
 		return reservation;
 	}
@@ -61,5 +60,9 @@ public class Reservation extends BaseEntity {
 		this.count = reservedDto.getCount();
 		this.reservedNm = reservedDto.getReservedNm();
 		this.date = reservedDto.getDate();
+	}
+	
+	public void setReserved(Reserved reserved) {
+        this.reserved = reserved;
 	}
 }

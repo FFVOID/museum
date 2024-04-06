@@ -25,7 +25,6 @@ import lombok.ToString;
 @Entity
 @Table(name = "reserved")
 @Getter
-@Setter
 @ToString
 public class Reserved extends BaseEntity{
 	
@@ -53,16 +52,18 @@ public class Reserved extends BaseEntity{
 	public static Reserved createReserved(Member member, List<Reservation> reservationItemList) {
 		
 		Reserved reserved = new Reserved();
-		reserved.setMember(member);
 		
-		for(Reservation reservationList : reservationItemList) {
-			reserved.addReservationList(reservationList);
+		reserved.member = member;
+		for(Reservation reservation : reservationItemList) {
+			reserved.addReservationList(reservation);
 		}
 		
-		reserved.setReservedDate(LocalDateTime.now());
+		reserved.reservedDate = LocalDateTime.now();
 		
 		return reserved;
 	}
+	
+	protected Reserved() {}
 	
 	public void updateReserved(ReservedHistDto reservedHistDto) {
 		

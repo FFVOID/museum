@@ -11,7 +11,6 @@ import lombok.*;
 @Entity
 @Table(name="item")
 @Getter
-@Setter
 @ToString
 public class Item extends BaseEntity{
 	
@@ -30,8 +29,8 @@ public class Item extends BaseEntity{
 	private String itemDate;
 	
 	//남은인원
-	private int stock;
-	
+	private Integer stock;
+
 	//전시 상세설명
 	@Lob
 	@Column(nullable = false, columnDefinition = "longtext")
@@ -40,6 +39,13 @@ public class Item extends BaseEntity{
 	@OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
 	private List<ItemImg> itemImgs = new ArrayList<>();
 	
+	public Item(String itemNm, String itemDetail, String itemDate, Integer stock) {
+        this.itemNm = itemNm;
+        this.itemDetail = itemDetail;
+        this.itemDate = itemDate;
+        this.stock = stock;
+    }
+	
 	//수정된 전시 정보를 업데이트
 	public void updateItem(NewItemDto newItemDto) {
 		this.itemNm = newItemDto.getItemNm();
@@ -47,6 +53,8 @@ public class Item extends BaseEntity{
 		this.itemDate = newItemDto.getItemDate();
 	
 	}
+	
+	protected Item() {}
 	
 	 // 예약 메서드
     public int newStock(int count) {
@@ -57,6 +65,10 @@ public class Item extends BaseEntity{
         }
         
         return stock;
+    }
+    
+    public void updateStock(int count) {
+    	this.stock = stock + count;
     }
 	
 	

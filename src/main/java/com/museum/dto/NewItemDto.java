@@ -25,7 +25,7 @@ public class NewItemDto {
 	@NotBlank(message = "전시날짜는 필수 입력값입니다")
 	private String itemDate;
 	
-	private int stock;
+	private Integer stock;
 	
 	//전시소장품 이미지 정보를 저장 
 	private List<ItemImgDto> itemImgDtoList = new ArrayList<>();
@@ -35,8 +35,8 @@ public class NewItemDto {
 	
 	private static ModelMapper modelMapper = new ModelMapper();
 			
-	public Item createItem() {
-		return modelMapper.map(this, Item.class);
+	public Item toItem() {
+	    return new Item(this.itemNm, this.itemDetail, this.itemDate, this.stock);
 	}
 	
 	//엔티티를 dto로
