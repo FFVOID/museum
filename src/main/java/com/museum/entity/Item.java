@@ -51,6 +51,7 @@ public class Item extends BaseEntity{
 		this.itemNm = newItemDto.getItemNm();
 		this.itemDetail = newItemDto.getItemDetail();
 		this.itemDate = newItemDto.getItemDate();
+		this.stock = newItemDto.getStock();
 	
 	}
 	

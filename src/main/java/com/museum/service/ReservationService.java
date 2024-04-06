@@ -149,7 +149,7 @@ public class ReservationService {
 		
 	    Item item = reservation.getItem();
 	    
-	    int Stock = item.getStock() - reCount;
+	    int Stock = item.getStock();
 	    
 	    if (Stock < 0) {
 	        throw new RuntimeException("예약이 불가능합니다");
@@ -175,8 +175,6 @@ public class ReservationService {
 		Item item = reservation.getItem();
 		
 		int preCount = reservation.getCount();
-	    int currentCount = reservation.getItem().getStock();
-	    int reCount = currentCount + preCount;
 	    
 	    item.updateStock(preCount);
 		

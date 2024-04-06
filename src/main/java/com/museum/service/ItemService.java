@@ -35,11 +35,12 @@ public class ItemService {
 	//전시 등록
 	public Long saveItem(NewItemDto newItemDto, List<MultipartFile> itemImgFileList,Item items) throws Exception {
 		
-		Item item = newItemDto.toItem(); //dto -> entity
 		
 		if(newItemDto.getStock() == null) {
 			newItemDto.setStock(100);
 		}
+		
+		Item item = newItemDto.toItem(); //dto -> entity
 		
 		itemRepository.save(item); //저장
 		
